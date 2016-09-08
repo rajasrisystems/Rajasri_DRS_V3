@@ -1,0 +1,295 @@
+html{
+	width:100%;
+	height:100%;
+}
+body {
+	margin:0;
+	padding:0;
+	background:rgba(0, 0, 0, 0) linear-gradient(#ffffff 25%, #66a3ff) repeat scroll 0 0;
+  	color:#fff;
+	font-family:verdana,arial,sans-serif;
+	font-size:11px;
+	width:100%;
+}
+#main{
+	width:100%;
+	height:auto;
+	margin:0 auto;
+	text-align:center;
+}
+#wrapper{
+	width:100%;
+	height:auto;
+	margin:0 auto;
+	background:#F4F4F5;
+}
+#login-panel{
+	width:500px;
+	height:auto;
+	background: #fff no-repeat;
+	color:#333;
+	margin:0 auto;
+	border:3px solid #66a3ff;
+}
+.Error {
+	
+	color:red;
+	font-size:14px;
+	text-align:center;
+	}
+.success {
+	
+	color:green;
+	font-size:14px;
+	text-align:center;
+	}
+.logo{
+	margin-top:50px;
+	margin-bottom:50px;
+}
+.inner-logo{
+	width:32px;
+	float:left;
+	margin-left:10px;
+	margin-right:33px;
+}
+.inner-logo img{
+	width:60px;
+	height:43px;
+}
+.top-bar{
+	padding-top:20px;
+	padding-bottom:2px;
+	border-bottom:1px dotted #cdcdcd;
+	color:#66a3ff;
+}
+.login-table{
+	width:80%;
+	margin:0 auto;
+	margin-top:20px;
+	margin-bottom:20px;
+	text-align:center;
+}
+.listing-table td{
+	color:#000;
+	font-size:14px;
+}
+.listing-table .textbox{
+	width:100%;
+	height:30px;
+	border:1px solid #dcdcdc;
+	color:#000;
+}
+.forgot{
+	color: #000;
+	font-size:12px;
+	text-decoration:none;
+}
+.forgot:hover{
+	text-decoration:underline;
+	color:#aaa;
+}
+.btn-submit{
+	color:#fff;
+	background-color:#66a3ff;
+	border:1px solid #66a3ff;
+	padding:10px;
+	font-weight:bold;
+	font-size:12px;
+	text-transform:capitalize;
+	cursor:pointer;
+}
+#login-footer{
+	color:#fff;
+	font-size:12px;
+	padding:10px;
+}
+#header{
+	width:100%;
+	/*height:30px;*/
+	position:fixed;
+	background:#F5F6F7;
+	margin:0 auto;
+	box-shadow: 1px 2px 6px #acacac;
+	}
+#top-navigation{
+	width:100%;
+	list-style-type:none;
+	display:inline;
+}
+#top-navigation li{
+	list-style-type:none;
+	display:inline;
+	float:left;
+	padding:12px 22px;
+}
+#top-navigation li a{
+	color:#a0a0a0;
+	font-size:14px;
+	font-weight:bold;
+	text-decoration:none;
+}
+#top-navigation li:hover{
+	border-bottom:3px solid #66a3ff;
+}
+.active{
+	border-bottom:3px solid #66a3ff;
+}
+#middle{
+	padding-top:27px;
+	margin:0 auto;
+	min-height:500px;
+	padding-bottom:50px;
+}
+.top-bar-header{
+	background-color:#fff;
+	color:#66a3ff;
+	padding:15px;
+}
+.breadcrumbs{
+	color:#333;
+}
+#footer{
+	background-color:#66a3ff;
+	color:#fff;
+	padding:20px;
+	text-align:center;
+	font-size:12px;
+}
+#center-column{
+	height:auto;
+}
+.dashboard-table{
+	width:95%;
+	margin:0 auto;
+}
+.leftcolumn{
+    float: left;
+    margin: 3px;
+    padding: 25px;
+    width: 15%;
+	background-color:#fff;
+	box-shadow: 1px 2px 6px #acacac;
+}
+.leftcolumn a{
+	color:#333;
+	text-decoration:none;
+	font-size:14px;
+}
+.leftcolumn a:hover{
+	color:#66a3ff;
+}
+#header-fixed{
+	width:100%;
+	position:fixed;
+	background:#F5F6F7;
+	margin:0 auto;
+	box-shadow: 1px 2px 6px #acacac;
+}
+.inner-logo-left{
+	width:32px;
+	margin-left:10px;
+	margin-right:33px;
+}
+.inner-logo-left img{
+	width:60px;
+	height:43px;
+}
+.menu-icon{
+	height:45px;
+	width:40px;
+	text-align:center;
+	vertical-align:middle;
+	border-right:1px dotted #acacac;
+	float:left;
+	cursor:pointer;
+}
+.menu-icon img{
+	margin-top:5px;
+}
+.menu-icon:hover{
+	background-color:#dcdcdc;
+}
+#leftpane{
+	width:200px;
+	height:100px;
+	z-index:0;
+	background-color:#acacac;
+}
+.manage-grid{
+	width:95%;
+	margin:0 auto;
+	text-align:center;
+}
+.grid-table{
+	text-align:center;
+	width:100%;
+	background-color:#fff;
+	color:#333;
+	border:1px solid #dcdcdc;
+}
+.grid-table th{
+	background-color:#66a3ff;
+	color:#fff;
+	font-size:13px;
+	font-weight:bold;
+	border:1px solid #dcdcdc;
+	padding:5px;
+	text-align:center;
+}
+.grid-table tr td{
+	border-bottom:1px solid #cccccc;
+}
+.grid-table td{
+	font-size:12px;
+	padding:10px;
+}
+.submit
+{
+	background-color:#66a3ff;
+	color:#fff;
+	border:1px solid #dcdcdc;
+	padding:10px;
+}
+a 
+{
+	text-decoration: none;
+	color:#333;
+}
+textarea 
+{
+	resize: none;
+}
+.report-page{
+	align-items: center;
+	
+}
+.overall-report{
+	
+	width:95%;
+	margin:0 auto;
+}
+.report_view{
+	
+}
+	
+ .ui-autocomplete {
+ max-width:230px;
+            max-height: 150px;
+            overflow-y: auto;
+            /* prevent horizontal scrollbar */
+            overflow-x: hidden;
+            /* add padding to account for vertical scrollbar */
+           
+        } 
+        
+.ui-menu-item {
+     font-size:12px;
+}
+.loggedUser{
+	float:right;
+	color:#A0A0A0;
+	padding:14px;
+	font-size:14px; 
+	font-weight:bold;
+}
