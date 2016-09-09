@@ -353,7 +353,7 @@ function check_all()
 				<td width="5%" nowrap="nowrap" style="text-align:left;border-bottom:none;">Department: <span style="color:red">*</span></td>
 				<td style="text-align:left;border-bottom:none;" width="5%"> 
 				<select id="department" name="department" style="width: 160px;"  onchange=" tap(this); check_single(); return getresdep(this.value); ">
-					<option value="">--Select--</option>
+					<option value="">All</option>
 					{foreach item=dept from=$depdata}
 					<p>
 					<option value='{$dept.Id}' {if $resourceDetails.0.DepartmentId eq $dept.Id} selected="selected" {/if}>

@@ -259,8 +259,8 @@ function getresdep(val){
 						{if $smarty.request.DepartmentID neq '' && $smarty.request.Res_Id neq ''}
 						{section name=C loop=$getresdep}
 						<option value="{$getresdep[C].ID}" 
-						{if $smarty.request.Res_Id eq $getresdep[C].ID} selected="selected"{/if}>
-{$getresdep[C].ResourceInitial}</option>
+						{if $getRating.0.ResourceID  eq $getresdep[C].ID} selected="selected"{/if}>
+						{$getresdep[C].ResourceInitial}</option>
 						{/section}	
 						{/if}
 					</select>

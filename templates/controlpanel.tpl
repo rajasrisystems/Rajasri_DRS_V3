@@ -33,7 +33,11 @@
 			  <a href="report.php"><img src="img/report.png" border="0" width="56" height="56" /></a><br />
               <a href="report.php" class="adminlink"><span>Reports Management</span></a> </div>
           </div>
-		  
+		  <div class="leftcolumn">
+            <div class="stroke" align="center"> 
+			  <a href="code.php"><img src="img/code-management.png" border="0" width="56" height="56" /></a><br />
+              <a href="code.php" class="adminlink"><span>Code Management</span></a> </div>
+          </div>
 		  
 		  
 		  
