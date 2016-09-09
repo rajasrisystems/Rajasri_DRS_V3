@@ -127,7 +127,7 @@ global $config;
 /********beg and end points********************/
 
 	$csvFile.='Beginning Rate,'.$begin_points.',End Rate,'.$average."\n";
-	$csvFile.="Date,Change,Rating,Notes,Manager\n"; 
+	$csvFile.="Date,Change,Rating,Notes,Code,Manager\n"; 
 	
 	$firstDate=$getyr.'-'.$getmon.'-01';
 	$date =date('Y-m-d', strtotime($firstDate . ' -1 month'));
@@ -205,9 +205,10 @@ global $config;
 				$pointsArr[]=$newPoint;
 				$maildate = date("d/m/Y",strtotime($date));
 				$mailnotes = $exe_res[0]['Notes'];
+				$mailcode=$objReport->getcodebyid($exe_res[0]['CodeID']);
 				$mailcreate = $objReport->getuserbyId($exe_res[0]['CreatedBy']);
 				//csv
-				$csvFile .= $maildate.','.$change.','.$newPoint.','.$mailnotes.','.$mailcreate."\n";
+				$csvFile .= $maildate.','.$change.','.$newPoint.','.$mailnotes.','.$mailcode.','.$mailcreate."\n";
 			}
 			else
 			{
@@ -215,9 +216,10 @@ global $config;
 				$pointsArr[]=$begin_points;
 				$maildate = date("d/m/Y",strtotime($date));
 				$mailnotes = $exe_res[0]['Notes'];
+				$mailcode=$objReport->getcodebyid($exe_res[0]['CodeID']);
 				$mailcreate = $objReport->getuserbyId($exe_res[0]['CreatedBy']);
 				//csv				
-				$csvFile .= $maildate.','.$ch.','.$begin_points.','.$mailnotes.','.$mailcreate."\n";
+				$csvFile .= $maildate.','.$ch.','.$begin_points.','.$mailnotes.','.$mailcode.','.$mailcreate."\n";
 				
 			}
 		}

@@ -146,6 +146,7 @@ if($_REQUEST['resource'] != '' &&  $_REQUEST['resource'] == '2')
 				<th>Change</th>
 				<th>Rating</th>
 				<th>Notes</th>
+				<th>Code</th>
 				<th>Manager</th>
 			</tr>  ';
 	$c=0;
@@ -213,8 +214,9 @@ if($_REQUEST['resource'] != '' &&  $_REQUEST['resource'] == '2')
 					<td>'.$change.' </td>
 					<td>'.$newPoint .'</td>
 					<td style="text-align: left;">'.$exe_res[0]['Notes'].'</td>
+					<td>'.$objReport->getcodebyid($exe_res[0]['CodeID']).'</td>
 					<td>'.$objReport->getuserbyId($exe_res[0]['CreatedBy']).'</td>
-				</tr>';
+					</tr>';
 			}else{
 				$pointsArr[]=$begin_points;
 				echo '<tr>
@@ -222,6 +224,7 @@ if($_REQUEST['resource'] != '' &&  $_REQUEST['resource'] == '2')
 					<td>&nbsp;</td>
 					<td>'.$begin_points .'</td>
 					<td>'.$exe_res[0]['Notes'].'</td>
+					<td>'.$objReport->getcodebyid($exe_res[0]['CodeID']).'</td>
 					<td>'.$objReport->getuserbyId($exe_res[0]['CreatedBy']).'</td>
 				</tr>';
 			}

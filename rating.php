@@ -18,6 +18,7 @@
 	if($_REQUEST['Rat_Id']!='')
 	{
 		$objLogin->get_RatingID($_REQUEST['Rat_Id']);
+		$objLogin->getresourcebydept($_REQUEST['DepartmentID']);
 	}
 	//objRating is in class.rating.php file
 	//to display the records in the page
@@ -30,6 +31,4 @@
 	$objSmarty->assign('IncludeTpl',"rating.tpl");
 	$objSmarty->display("pagetemplate.tpl");
 ?>
-
-
 
