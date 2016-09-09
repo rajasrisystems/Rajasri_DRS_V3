@@ -47,6 +47,15 @@ class Report extends MysqlFns
 		//$objSmarty->assign('adminDetails', $displaydet);
 		return $displaydet[0]['Username'];
 	}
+	function getcodebyid($id)
+	{
+		global $objSmarty,$config;
+		//Get the details from table for edit option
+		$tempdisvar= "SELECT * FROM code where ID = ' $id' ";
+		$displaydet= $this->ExecuteQuery($tempdisvar, "select");
+		//$objSmarty->assign('adminDetails', $displaydet);
+		return $displaydet[0]['Code'];
+	}
 	function getb($m,$i,$y)
 	{
 		global $objSmarty,$config;
@@ -233,7 +242,7 @@ class Report extends MysqlFns
                 }
 		$mail->Body = $iniquery.",\n\nPlease find your ratings for the month ".$monthName."-".$mailyr." in the attached file.";
                 $mail->AddAddress("$Recipiant","");
-                if($mail->Send()) 
+         if($mail->Send()) 
 		{
 			header('Location: report.php?id=1');
 		}

@@ -125,8 +125,8 @@ class Login extends MysqlFns
 		$datetemp = date("y/m/d");  
 		$tempdisvar= "SELECT * FROM rating r,resource re,code c 
 				   WHERE r.ResourceID=re.ID and r.CodeID=c.ID 
-				   AND r.RatingID=' $id'";
-		$displaydet= $this->ExecuteQuery($tempdisvar, "select");
+				   AND r.RatingID=' $id'"; 
+		$displaydet= $this->ExecuteQuery($tempdisvar, "select"); 
 		$objSmarty->assign('getRating', $displaydet);
 	}
 	function Update_rating($id)
@@ -151,7 +151,7 @@ class Login extends MysqlFns
 		global $objSmarty,$config;
 		 
 		$tempdisvar= "SELECT * FROM `resource`"
-		             ." WHERE  	DepartmentId ='".$did."' order by ResourceInitial asc";
+		             ." WHERE  	DepartmentId ='".$did."' order by ResourceInitial asc"; 
 		$displaydet= $this->ExecuteQuery($tempdisvar, "select");
 		$objSmarty->assign('getresdep', $displaydet);	
 			
