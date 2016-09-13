@@ -23,43 +23,20 @@ function getresdep(val){
 		}
 	});
 }
-function alldepartval()
+function getreport()
 {
-	if(document.getElementById('department').value =="")
+	var month=document.getElementById('month').value; 
+	var year=document.getElementById('year').value; 	
+	var department=document.getElementById('department').value; 
+	var newresid=document.getElementById('newresid').value; 
+	if(month != '0' && year != '0' && department !='' && newresid !='' )
 	{
-		alert('Please select department');
-		document.getElementById('department').focus();
-		document.getElementById('radio2').checked = false;
-		return false;
+		document.getElementById('getreshid').value ='2';
 	}
 	else
-	{	
-		tbl_report();
+	{
+		document.getElementById('getreshid').value ='1';
 	}
-}
-
-function departval()
-{
-	if(document.getElementById('department').value =="")
-		{
-			alert('Please select department');
-			document.getElementById('department').focus();
-			document.getElementById('radio1').checked = false;
-			return false;
-		}
-	if(document.getElementById('newresid').value=='')
-		{
-			alert('Please select initial');
-			document.getElementById('newresid').focus();
-			document.getElementById('radio1').checked = false;
-			return false;
-		}
-		else
-		{
-		tbl_view();
-		return true;
-		}
-	
 }
 function tbl_view()
 	{
@@ -90,19 +67,14 @@ function tbl_view()
 			    }
 			    	    
 			 });
-		$( "#radio1" ).prop( "checked", true ); /*individual*/
+		$( "#radio1" ).prop( "checked", true ); 
     		document.getElementById("sendmail").style.display = "block";
 		}
 	}
 function tbl_report()
 	{
 		// All resource 
-		if(document.getElementById("radio2").checked==false && document.getElementById("radio1").checked==false)
-		{
-			return false;	
-		}
-		else
-		{
+			alert('ajax');
 			month=document.getElementById('month').value;
 			year=document.getElementById('year').value;
 			dept=document.getElementById('department').value;
@@ -124,22 +96,8 @@ function tbl_report()
 					}
 			    }
 			 });
-		$( "#radio2" ).prop( "checked", true );	
-		}
+			 alert('last');
 	}	
-
-function chkResource()
-{
-		if(document.getElementById("radio2").checked==true)
-		{
-			tbl_report();
-		}
-		else
-		{
-			tbl_view();
-		}
-}
-
 function sortsub1()
 	{
 	if((document.getElementById('sortflag').value!="1")&&(document.getElementById('sortflag').value!="2"))
@@ -314,116 +272,118 @@ function check_all()
 		check_all();	
 	}	 
  }
+
+
 </script>
 {/literal}
 <!--Design Prepared by Rajasri Systems-->   
 <body>
 <div id="wrapper">
-<div style="clear:both;"></div>	
-<div id="middle"> 
-  <div id="center-column">
-    <div class="top-bar-header">
-		<h1>Reports</h1>
-		<div class="breadcrumbs"><a href="controlpanel.php" >Home</a> >> Reports</div>
-		</div>
-		<br/>
-		<div class = "manage-grid">
-		<div class="report-page" style="text-align:left;">
-		<form action="report.php" name="rptpage" method="post" accept-charset=utf-8>
-			<table border="0" cellpadding="0" cellspacing="0" class="grid-table">
-				<th colspan="9" style="text-align:left">Reports</th>
-				<tr>
-				<td colspan="9" style="border-bottom:none;"> <div class="success">{if $smarty.request.id eq 1} Email sent successfully {/if}</div> </td>	
-				</tr>
-				<tr>
-				<div class="Error" align="center" id="errmsg"></div>
-				 <td width="10%" nowrap="nowrap" style="border-bottom:none;">Select Month & Year:</td>
-				 <td width="16%" style="text-align:left;border-bottom:none;">
-					<select id="month" name="month" onchange="tap(this); return chkResource();">
-					{foreach key=k item=v from=$months}	
-					<option value='{$k}' {if $k eq $currentMonth}selected{/if}>{$v} </option>
- 					{/foreach}
-					</select>
-					<select id="year" name="year" onchange="return chkResource();">	
-					{foreach key=yk item=yv from=$year}	
-					<option value='{$yv}' {if $yv eq $currentYear}selected{/if}>{$yv} </option>
- 					{/foreach}
-					</select>
-				 </td>
-				<td width="5%" nowrap="nowrap" style="text-align:left;border-bottom:none;">Department: <span style="color:red">*</span></td>
-				<td style="text-align:left;border-bottom:none;" width="5%"> 
-				<select id="department" name="department" style="width: 160px;"  onchange=" tap(this); check_single(); return getresdep(this.value); ">
-					<option value="">All</option>
-					{foreach item=dept from=$depdata}
-					<p>
-					<option value='{$dept.Id}' {if $resourceDetails.0.DepartmentId eq $dept.Id} selected="selected" {/if}>
-						{$dept.DepartmentName}
-					</option>
-					</p>
-					{/foreach}	
-				</select>
-				<input type="hidden" name="deptname" id="deptname" value=" ">
-				<input type="hidden" name="optionname" id="optionname" value=" ">
-
-				
-				</td>
-				<input type="hidden" name="dataction" id="dataction">
-				<input type="hidden" name="numrec" id="numrec">
-				<input type="hidden" name="singlerestemp" id="singlerestemp">
-				<td width="5%" nowrap="nowrap" style="text-align:left;border-bottom:none;">Resource:</td>
-				<td width="5%"  style="text-align:left;border-bottom:none;">
-				<input type ="radio" id="radio2" name = "radio" onclick="alldepartval(); check_all();" value="all"> 
-	               		<span style="text-align:left" width="6%"valign="top">All</span>
-	            		</td>
-              			<td width="18%" style="text-align:left;border-bottom:none;">
-				<input type ="radio" id="radio1" name = "radio"  onclick="departval();check_single();" value="sing"> 
-	             		<span style="text-align:left;" width="10%" valign="top" nowrap="nowrap" >Individual</span>
-	          		<select id="newresid" name="newresid" style="width: 96px;" onchange=" check_single(); tapp(this); return tbl_view(); ">
-						<option value="">--Resource--</option>
-						<!--  {foreach item=resource from=$tabresdata}
-						<option value='{$resource.ID}'>{$resource.ResourceInitial}</option>
-						{/foreach}	-->
-				</select>   
-	           		</td>
-               			<!--<td style="text-align:right;"> 
-
-	                	<input type="hidden" id="exportQuery" name="exportQuery" value="">
-	                	<input type="hidden" id="reportType" name="reportType" value="Transactions">
-				 <button id="exportBtn" download="Report.xls" class="btn btn-lg btn-warning custom-btn-01 hover_effect pull-right pull-right-to-left">Export to CSV</button>
-				</td> -->
-				
-				<td style="text-align:left; display:none;border-bottom:none;" id="sendmail" name="sendmail">
-				<a  class="button" id="top"  href="javascript:void(0);" onclick="goExport();"><img src="img/mail_send.png" align="middle" height="30" width="30">Send mail</a>
-				</td>
-				<input type="hidden" name="resourceinital" id="resourceinital" value=" ">
-				<td style="text-align:right;border-bottom:none;">
-				<div style="display:block;" id="export">
-<a class="button" id="top" href="javascript:void(0);" onclick="tool(this);"><img src="img/CSV.png" align="middle" height="30" width="30">Export to CSV</a></div>
-				<div style="display:none;" id="exportnew">
-<a class="button" id="top" href="javascript:void(0);" onclick="tool(this);return ExcellentExport.excel(this,'exporttable'); "><img src="img/CSV.png" align="middle" height="30" width="30">Export to CSV</a></div>
-				
-				</td>
-	         		</tr>
-	         		<tr>
-				<td style="border-bottom:none;">&nbsp;</td>
-				</tr>
-	         	</table>
-		</form>
-	      </div>	  
-	<br/>
-		<input type="hidden" name="sortflag" id="sortflag" value="{$smarty.request.sortflag}">
-		<div class="report_view" id="mgrid" >
+	<div style="clear:both;"></div>	
+		<div id="middle"> 
+		  <div id="center-column">	
+		    <div class="top-bar-header">
+				<h1>Reports</h1>
+				<div class="breadcrumbs"><a href="controlpanel.php" >Home</a> >> Reports</div>
+			</div>
+			<br/>
+			<div class = "manage-grid">
+			<form  name="rptpage"  method="post" onsubmit="return getreport();" accept-charset=utf-8>
+				<div class="report-page" style="text-align:left;">
+					<input type="hidden" name="sortflag" id="sortflag" value="{$smarty.request.sortflag}">
+					<input type="hidden" name="deptname" id="deptname" value=" ">
+					<input type="hidden" name="optionname" id="optionname" value=" ">
+					<input type="hidden" name="dataction" id="dataction">
+					<input type="hidden" name="getreshid" id="getreshid">
+					<input type="hidden" name="numrec" id="numrec">
+					<input type="hidden" name="singlerestemp" id="singlerestemp">
+					<input type="hidden" name="resourceinital" id="resourceinital" value=" ">
+					
+					<table border="0" cellpadding="0" cellspacing="0" class="grid-table">
+						<th colspan="11" style="text-align:left">Reports</th>
+						<tr>
+							<td colspan="9" style="border-bottom:none;"> <div class="success">{if $smarty.request.id eq 1} Email sent successfully {/if}</div> </td>	
+						</tr>
+						<tr>
+							<div class="Error" align="center" id="errmsg"></div>
+						 	<td width="5%" nowrap="nowrap" style="border-bottom:none;">From:</td>
+				 			<td width="7%" style="text-align:left;border-bottom:none;">
+								<select id="month" name="month" onchange="tap(this); return chkResource();">
+								{foreach key=k item=v from=$months}	
+								<option value='{$k}' {if $k eq $currentMonth}selected{/if}>{$v} </option>
+ 								{/foreach}
+								</select>
+							</td>
+							<td nowrap="nowrap" style="border-bottom:none;">To:</td>
+							<td width="10%" style="text-align:left;border-bottom:none;">
+								<select id="year" name="year" onchange="return chkResource();">	
+								{foreach key=yk item=yv from=$year}	
+								<option value='{$yv}' {if $yv eq $currentYear}selected{/if}>{$yv} </option>
+ 								{/foreach}
+								</select>
+					 		</td>
+							<td width="5%" nowrap="nowrap" style="text-align:left;border-bottom:none;">Department: <span style="color:red">*</span></td>
+							<td style="text-align:left;border-bottom:none;" width="5%"> 
+								<select id="department" name="department" style="width: 160px;"  onchange="return getresdep(this.value); ">
+								<option value="">All</option>
+								{foreach item=dept from=$depdata}
+								<p>
+								<option value='{$dept.Id}' {if $resourceDetails.0.DepartmentId eq $dept.Id} selected="selected" {/if}>
+								{$dept.DepartmentName}
+								</option>
+								</p>
+								{/foreach}	
+								</select>
+							</td>
+							<td width="5%" nowrap="nowrap" style="text-align:left;border-bottom:none;">Resource:</td>
+							<td width="5%"  style="text-align:left;border-bottom:none;">
+								<input type ="radio" id="radio2" name = "radio"  value="all" checked> 
+	               				<span style="text-align:left" width="6%"valign="top">All</span>
+	            			</td>
+              				<td width="18%" style="text-align:left;border-bottom:none;">
+								<input type ="radio" id="radio1" name = "radio"  value="sing"> 
+	             				<span style="text-align:left;" width="10%" valign="top" nowrap="nowrap" >Individual</span>
+	          					<select id="newresid" name="newresid" style="width: 96px;" >
+								<option value="">--Resource--</option>
+								<!--  {foreach item=resource from=$tabresdata}
+										<option value='{$resource.ID}'>{$resource.ResourceInitial}</option>
+										{/foreach}	-->
+								</select>   
+	           				</td>
+               				
+							<td style="text-align:left; display:none;border-bottom:none;" id="sendmail" name="sendmail">
+								<a  class="button" id="top"  href="javascript:void(0);" onclick="goExport();"><img src="img/mail_send.png" align="middle" height="30" width="30">Send mail</a>
+							</td>
+							
+							<td style="text-align:right;border-bottom:none;">
+								<div style="display:block;" id="export">
+								<a class="button" id="top" href="javascript:void(0);" onclick="tool(this);"><img src="img/CSV.png" align="middle" height="30" width="30">Export to CSV</a></div>
+								<div style="display:none;" id="exportnew">
+								<a class="button" id="top" href="javascript:void(0);" onclick="tool(this);return ExcellentExport.excel(this,'exporttable'); "><img src="img/CSV.png" align="middle" height="30" width="30">Export to CSV</a></div>
+							</td>
+	        		 	</tr>
+	         			<tr style="border-bottom:none;">
+							<td colspan="10"> 		
+	 							<input type=submit name="submit1" value="Submit"> 
+							</td>
+						</tr>
+	         		</table>
+					
+	      		</div>	  
+				<br/>
+			<div class="report_view" id="mgrid" >
 			<table id="exporttable" border="0" cellpadding="2" cellspacing="0" class="grid-table">
-			<tr>
-				<th>Resource</th>
-				<th>Beginning Rate</th>
-				<th>End Rate</th>
-			</tr> 
-			 <tr><td colspan="5">No records found</td></tr>
+			 	{section name=I loop=$table}
+			 		{$table[I]}
+				{/section}
+				{section name=A loop=$table2}
+					{$table2[A]}
+				{/section}
 			</table>
-		</div>
- </div>
-</div>
+			</div>
+			</form>
+		 </div>
+	</div>
 </div>	
 </body>
 </html>

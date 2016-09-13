@@ -171,7 +171,7 @@
 				<td style="text-align:left;">{$codeval[i].Description}</td>
 				<td >{$codeval[i].Points}</td>
 				<td style="padding:8px">
-				<a href="code.php?Id=1&Code_Id={$codeval[i].ID}"><img src="img/b_edit.png" onclick="return disablefunc();"></a>&nbsp;&nbsp;
+				<a href="code.php?Id=1&Code_Id={$codeval[i].ID}"><img src="img/b_edit.png"></a>&nbsp;&nbsp;
 				<a href="codedrop.php?Del_Id={$codeval[i].ID}"><img src="img/b_drop.png" onclick="return myFunction();" ></a>
 				<input type="hidden" name="delvar" id="delvar" value="{$displaydet[i].RatingID}">
 				</td>

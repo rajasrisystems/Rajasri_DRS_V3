@@ -16,10 +16,11 @@
 	<ul id="top-navigation">
 			<li {if $activePage eq '1'}class="active"{/if}><a href="controlpanel.php" class="navigation_link">Home</a></li>
 			<li {if $activePage eq '5'}class="active"{/if}><a href="admin.php" class="navigation_link">Admin</a></li>
+			<li {if $activePage eq '6'}class="active"{/if}><a href="code.php" class="navigation_link">Code</a></li>
 			<li {if $activePage eq '4'}class="active"{/if}><a href="resource.php" class="navigation_link">Resource</a></li>
 			<li {if $activePage eq '2'}class="active"{/if}><a href="rating.php" class="navigation_link">Rating</a></li>
 			<li {if $activePage eq '3'}class="active"{/if}><a href="report.php" class="navigation_link">Reports</a></li>
-			<li {if $activePage eq '6'}class="active"{/if}><a href="code.php" class="navigation_link">Code</a></li>
+		
 			<li><a href="logout.php" class="navigation_link">Logout</a></li>
 	</ul>
 	<div class="loggedUser">Welcome <span style="color:#66A3FF;">{$smarty.session.Name}</span></div>
