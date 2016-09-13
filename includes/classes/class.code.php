@@ -29,7 +29,7 @@ class Code extends MysqlFns
 				         VALUES 
 				      	 ('".++$count."','".$_REQUEST['code']."','".$_REQUEST['points']."','".$_REQUEST['codeshow']."')"; 
 		$this->ExecuteQuery($a, "insert");
-		header("location:code.php?successmsg=1");
+		header("location:code.php?successmsg=1");// redirecting
 		}
 		if($_REQUEST['codeshow']=='2')
 		{
@@ -39,26 +39,55 @@ class Code extends MysqlFns
 		$count=$row['Code'];
 		$a = "INSERT INTO code(Code,
 					 Description,
-					  Points) 
+					  Points,
+					  codetype) 
 				         VALUES 
-				      	 ('".++$count."','".$_REQUEST['code']."','".$_REQUEST['points']."')"; 
+				      	 ('".++$count."','".$_REQUEST['code']."','".$_REQUEST['points']."','".$_REQUEST['codeshow']."')"; 
 		$this->ExecuteQuery($a, "insert");
-		header("location:code.php?successmsg=1");
+		header("location:code.php?successmsg=1");// redirecting
 		}
 	}
 	function Updatecode($id)
 	{
 		global $objSmarty,$config;
+		if($_REQUEST['codeshow']=='1')
+		{
+		$selcode="select * from code where Code like 'G%' order by ID desc limit 1";
+		$ExeSel= mysql_query($selcode);
+		$row = mysql_fetch_array($ExeSel);
+		$count=$row['Code'];
+		$tempvar = " UPDATE code SET Code ='".++$count."', 
+					 Description = '".$_REQUEST['code']."' ,
+					 Points = '".$_REQUEST['points']."',
+					 codetype ='".$_REQUEST['codeshow']."'
+					 WHERE ID ='$id'";
+		$this->ExecuteQuery($tempvar, "update");
+		header("location:code.php?successmsg=2");// redirecting
+		}
+		if($_REQUEST['codeshow']=='2')
+		{
+		$selcode="select * from code where Code like 'B%' order by ID desc limit 1";
+		$ExeSel= mysql_query($selcode);
+		$row = mysql_fetch_array($ExeSel);
+		$count=$row['Code'];
+		$tempvar = " UPDATE code SET Code ='".++$count."', 
+					 Description = '".$_REQUEST['code']."' ,
+					 Points = '".$_REQUEST['points']."',
+					 codetype ='".$_REQUEST['codeshow']."'
+					 WHERE ID ='$id'";
+		$this->ExecuteQuery($tempvar, "update");
+		header("location:code.php?successmsg=2");// redirecting
+		}
 		/* echo $selcode="select Code from code where ID= '".$id."' ";
 		$ExeSel= mysql_query($selcode);
 		echo $row = mysql_fetch_array($ExeSel);
 		exit;
-		$codeid =$row;*/
+		$codeid =$row;
 		$tempvar = " UPDATE code SET  Description = '".$_REQUEST['code']."' ,
 					 Points = '".$_REQUEST['points']."'
 					 WHERE ID ='$id'";
 		$this->ExecuteQuery($tempvar, "update");
-		header("location:code.php?successmsg=2");// redirecting
+		header("location:code.php?successmsg=2");*/
 	}
 	function getAllcode()
 	{
