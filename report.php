@@ -35,6 +35,7 @@
 	}
 	elseif($_REQUEST['getreshid'] == '2')
 	{
+		$objLogin->getresourcebydept($_REQUEST['department']);
 		$objReport->getindres();
 	}
 	

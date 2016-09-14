@@ -19,7 +19,7 @@ if($count!='0')
 while($view=mysql_fetch_array($res))
 {
 ?>
-<option value="<?php echo $view['ID'];?>"><?php echo $view['ResourceInitial'];?></option>
+<option value="<?php echo $view['ID'];?>" ><?php echo $view['ResourceInitial'];?></option>
 <?php 
 } 
 
