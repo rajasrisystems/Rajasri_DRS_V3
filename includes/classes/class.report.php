@@ -27,6 +27,7 @@ class Report extends MysqlFns
 		$associativeArray = array();
 		if($num!=''){
 			$table[]='<tr >
+				<tr style="display:none;"><td>Period</td><td>'.$monthName.'-'.$getyr.'</td></tr>
 				<th>Resource</th>
 				<th>Beginning Rate</th>
 				<th>End Rate</th>
@@ -138,13 +139,21 @@ class Report extends MysqlFns
 	$getyr  = $_REQUEST['year'];
 	$getdepart = $_REQUEST['department'];	
 	$date=$getmon.'/'.$getyr;
-	$select="select * from rating r,resource re where date_format(r.RatingDate, '%m/%Y')='".$date."' and re.ID=r.ResourceID and r.DepartmentID ='".$getdepart."' group by r.ResourceID";
+	if($getdepart == 0)
+	{
+		$select="select * from rating r,resource re where date_format(r.RatingDate, '%m/%Y')='".$date."' and re.ID=r.ResourceID group by r.ResourceID";
+	}
+	else 
+	{
+		$select="select * from rating r,resource re where date_format(r.RatingDate, '%m/%Y')='".$date."' and re.ID=r.ResourceID and r.DepartmentID ='".$getdepart."' group by r.ResourceID";
+	}
 	$result=mysql_query($select);
 	$num=mysql_num_rows($result);
 	$c=1;
 	$associativeArray = array();
 	if($num!=''){
 		$table[]='<tr >
+				<tr style="display:none;"><td>Period</td><td>'.$monthName.'-'.$getyr.'</td></tr>
 				<th>Resource</th>
 				<th>Beginning Rate</th>
 				<th>End Rate</th>
@@ -279,14 +288,18 @@ class Report extends MysqlFns
 		$onlydate=date('d');
 		$nnprepoints = $onlydate * $begin_points;
 		$noofdays = 0;
-		$table[]="<tr >
+		$table[]='<tr >
+		<tr style="display:none;"><td>Period</td><td>'.$monthName.'-'.$getyr.'</td></tr>
+		<tr style="display:none;"><td> Resource:</td><td>'.$iniquery.'</td></tr>
+		<tr style="display:none;"><td> Beginning Rate</td><td>'.$this->getb($getmon,$getini,$getyr).'</td><td> End Rate</td><td>'.$this->gete($getmon,$getini,$getyr).'</td>
+		<tr style="display:none;"></tr>	
 				<th>Date</th>
 				<th>Change</th>
 				<th>Rating</th>
 				<th>Notes</th>
 				<th>Code</th>
 				<th>Manager</th>
-			</tr>";
+			</tr>';
 		foreach($datesArr as $date){
 			if($date <= $today){
 				$noofdays++;	
@@ -499,9 +512,9 @@ class Report extends MysqlFns
 	$lastDate=date("Y-m-t", strtotime($firstDate));
 	$date=$firstDate;
 	$datesArr[]=$date;
-	for($i=1;$i<$numberOfDays;$i++){
+	for($i=1;$i<$numberOfDays;$i++)
+	{
 		$date=date('Y-m-d', strtotime($date . ' +1 day'));
-
 		$datesArr[]=$date;
 	}
 	$c=0;
@@ -580,17 +593,16 @@ class Report extends MysqlFns
 		$mail_sendlink=$this->sendmail($monthName,$mailyear,$to_email,$filepath,$iniquery);
 	}
 	function sendmail($monthName,$mailyr,$to_email,$file,$iniquery)
-    	{
+    {
 		if($to_email!="")
-           	 {
-                $Recipiant = $to_email;
+        	{
+        		$Recipiant = $to_email;
                 $subject="Daily Ratings for the month of ".$monthName."-".$mailyr."";
                 $Sender="hr@rajasri.net";
                 $host= $config['Email_Host'];                               // sets GMAIL as the SMTP server
                 $port=$config['Email_Port'];                             // set the SMTP port for the GMAIL server
                 $username=$config['Email_Username'];                   // GMAIL username
                 $pwd=$config['Email_Password'];
-
                 include $_SERVER['DOCUMENT_ROOT'].'/rajasri_DRS/phpmailer/class.phpmailer.php';
                 $mail = new PHPMailer();
                 $mail->IsSMTP();
@@ -607,21 +619,21 @@ class Report extends MysqlFns
                 $mail->Sender      = $Sender;
                 $mail->Subject    = $subject;
                 if($file!="")
-		{
+				{
                    $mail->AddAttachment($file); // attach files
                 }
-		$mail->Body = $iniquery.",\n\nPlease find your ratings for the month ".$monthName."-".$mailyr." in the attached file.";
-                $mail->AddAddress("$Recipiant","");
-         if($mail->Send()) 
-		{
-			header('Location: report.php?id=1');
-		}
-		else
-		{
-			return false;
-		}
-                $mail->ClearAddresses();
-           	 }
+				$mail->Body = $iniquery.",\n\nPlease find your ratings for the month ".$monthName."-".$mailyr." in the attached file.";
+		        $mail->AddAddress("$Recipiant","");
+		        if($mail->Send()) 
+				{
+					header('Location:report.php?id=1');
+				}
+				else
+				{
+					return false;
+				}
+		        $mail->ClearAddresses();
+		    }
 	}
 }
 ?>

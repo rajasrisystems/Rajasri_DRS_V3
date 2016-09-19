@@ -149,9 +149,8 @@ class Login extends MysqlFns
 	function getresourcebydept($did)
 	{
 		global $objSmarty,$config;
-		 
 		$tempdisvar= "SELECT * FROM `resource`"
-		             ." WHERE  	DepartmentId ='".$did."' order by ResourceInitial asc"; 
+		             ." WHERE  	DepartmentId ='".$did."' order by ResourceInitial asc";  
 		$displaydet= $this->ExecuteQuery($tempdisvar, "select");
 		$objSmarty->assign('getresdep', $displaydet);	
 			
