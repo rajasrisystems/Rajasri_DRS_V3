@@ -2,6 +2,7 @@
 	include 'includes/common.php';
 	include_once "includes/classes/class.index.php";
 	include_once "includes/classes/class.report.php";
+	ob_start();
 	$objLogin = new Login();
 	$objReport = new Report();
 	//Get department values
@@ -14,6 +15,16 @@
 		}
 	$objSmarty->assign('depdata', $depdata);
 	
+	$SelQuery	= "SELECT ID,DepartmentId,ResourceInitial FROM `resource`"
+		             ." WHERE  	DepartmentId ='".$_REQUEST['department']."' order by ResourceInitial asc";
+
+	$res=mysql_query($SelQuery);
+	
+	while($view=mysql_fetch_array($res))
+		{
+			$getresdep[] = $view;	
+		}
+	$objSmarty->assign('getresdep', $getresdep);
 	// month and year array 
 	
 	$months = array('01'=>"January", '02'=>"February", '03'=>"March", '04'=>"April", '05'=>"May", '06'=>"June", 
@@ -23,9 +34,15 @@
 	$objSmarty->assign('year',$year);
 	$objSmarty->assign('months',$months);
 	
+	
 	$objSmarty->assign('currentMonth', date('m'));
 	$objSmarty->assign('currentYear', date('Y'));
 	
+	if($_REQUEST['month'] && $_REQUEST['year'] != '') 
+	{
+	$objSmarty->assign('currentMonth',$_REQUEST['month']);
+	$objSmarty->assign('currentYear', $_REQUEST['year']);	
+	}
 	$objLogin->chklogin();
 	
 	
@@ -38,15 +55,6 @@
 		$objLogin->getresourcebydept($_REQUEST['department']);
 		$objReport->getindres();
 	}
-	
-	/*$disvar = "SELECT * FROM resource order by ResourceInitial asc";
-	$result = mysql_query($disvar) OR die(mysql_error());
-	while($row = mysql_fetch_assoc($result))
-		{
-			$data[] = $row; // store in array	
-		}
-	$objSmarty->assign('tabresdata', $data);*/	
-	//print_r(res_ini);
 	$objSmarty->assign('activePage',"3");
 	$objSmarty->assign('IncludeTpl',"report.tpl");
 	$objSmarty->display("pagetemplate.tpl");

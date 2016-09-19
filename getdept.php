@@ -10,7 +10,7 @@
 	$count=mysql_num_rows($res); 
 	
 ?>
-<select id="newresid" name="newresid" style="width: 120px;" onchange="return tbl_view();">
+<select id="newresid" name="newresid" style="width: 120px;" >
 <option value="">--Resource--</option>
 <?php 
 if($count!='0')
