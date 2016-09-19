@@ -126,19 +126,19 @@
 				<td style="text-align:right;border-bottom:none;">Code ID: <span style="color:red">*</span></td>
 					<td id="" style="text-align:center;border-bottom:none;" width="5%"> 
 					<select id="codeshow" name="codeshow" style="width: 95px;" >
-						<option value="">--Select--</option>
+						<option value="">---Code---</option>
 						<option {if $indcode.0.codetype eq 1} selected="selected" {/if} value="1">Good</option>
 						<option {if $indcode.0.codetype eq 2} selected="selected" {/if} value="2">Bad</option>
 					</select>
 					</td>
 				<td style="text-align:right;border-bottom:none;"> Description: <span style="color:red">*</span></td>
-					<td style="text-align:left;border-bottom:none;">
+					<td style="text-align:center;border-bottom:none;width:100px;">
 						<input type="text" id="code" style=" width:400px;" name="code" value="{$indcode.0.Description}">
 	                </td>
 	           
 	            <td style="text-align:right;border-bottom:none;"> Points: <span style="color:red">*</span></td>
 					<td style="text-align:left;border-bottom:none;">
-						<input type="text" id="points" style=" width:100px;" name="points" value="{$indcode.0.Points}">
+						<input type="text" id="points"  name="points" value="{$indcode.0.Points}">
 	                </td>
 	            </tr>
 				<tr style="border-bottom:none;">

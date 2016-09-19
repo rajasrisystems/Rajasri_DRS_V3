@@ -29,8 +29,10 @@ function getreport()
 	var year=document.getElementById('year').value; 	
 	var department=document.getElementById('department').value; 
 	var newresid=document.getElementById('newresid').value; 
+
 	if(month != '0' && year != '0' && department !='' && newresid !='' )
 	{
+		//document.getElementById("sendmail").style.display = "block";
 		document.getElementById('getreshid').value ='2';
 	}
 	else
@@ -67,7 +69,7 @@ function tbl_view()
 			    }
 			    	    
 			 });
-		$( "#radio1" ).prop( "checked", true ); 
+		//$( "#radio1" ).prop( "checked", true ); 
     		document.getElementById("sendmail").style.display = "block";
 		}
 	}
@@ -302,7 +304,7 @@ function check_all()
 					<table border="0" cellpadding="0" cellspacing="0" class="grid-table">
 						<th colspan="11" style="text-align:left">Reports</th>
 						<tr>
-							<td colspan="9" style="border-bottom:none;"> <div class="success">{if $smarty.request.id eq 1} Email sent successfully {/if}</div> </td>	
+							<td colspan="11" style="border-bottom:none;"> <div class="success">{if $smarty.request.id eq 1} Email sent successfully {/if}</div> </td>	
 						</tr>
 						<tr>
 							<div class="Error" align="center" id="errmsg"></div>
@@ -310,7 +312,7 @@ function check_all()
 				 			<td width="7%" style="text-align:left;border-bottom:none;">
 								<select id="month" name="month" onchange="tap(this); return chkResource();">
 								{foreach key=k item=v from=$months}	
-								<option value='{$k}' {if $k eq $currentMonth}selected{/if}>{$v} </option>
+								<option value='{$k}' {if $k eq $currentMonth}selected{/if} >{$v} </option>
  								{/foreach}
 								</select>
 							</td>
@@ -318,17 +320,17 @@ function check_all()
 							<td width="10%" style="text-align:left;border-bottom:none;">
 								<select id="year" name="year" onchange="return chkResource();">	
 								{foreach key=yk item=yv from=$year}	
-								<option value='{$yv}' {if $yv eq $currentYear}selected{/if}>{$yv} </option>
+								<option value='{$yv}' {if $yv eq $currentYear}selected{/if}>{$yv}</option>
  								{/foreach}
 								</select>
 					 		</td>
 							<td width="5%" nowrap="nowrap" style="text-align:left;border-bottom:none;">Department: <span style="color:red">*</span></td>
 							<td style="text-align:left;border-bottom:none;" width="5%"> 
 								<select id="department" name="department" style="width: 160px;"  onchange="return getresdep(this.value); ">
-								<option value="">All</option>
+								<option value="0">All</option>
 								{foreach item=dept from=$depdata}
 								<p>
-								<option value='{$dept.Id}' {if $resourceDetails.0.DepartmentId eq $dept.Id} selected="selected" {/if}>
+								<option value='{$dept.Id}' {if $smarty.request.department eq $dept.Id}Selected{/if}>
 								{$dept.DepartmentName}
 								</option>
 								</p>
@@ -337,21 +339,30 @@ function check_all()
 							</td>
 							<td width="5%" nowrap="nowrap" style="text-align:left;border-bottom:none;">Resource:</td>
 							<td width="5%"  style="text-align:left;border-bottom:none;">
-								<input type ="radio" id="radio2" name = "radio"  value="all" checked> 
+								<input type ="radio" id="radio2" name = "radio"  value="all" {if $smarty.request.newresid eq ''} checked="checked" {/if}> 
 	               				<span style="text-align:left" width="6%"valign="top">All</span>
 	            			</td>
               				<td width="18%" style="text-align:left;border-bottom:none;">
-								<input type ="radio" id="radio1" name = "radio"  value="sing"> 
+								<input type ="radio" id="radio1" name = "radio"  value="sing" {if $smarty.request.newresid neq ''} checked="checked" {/if}> 
 	             				<span style="text-align:left;" width="10%" valign="top" nowrap="nowrap" >Individual</span>
 	          					<select id="newresid" name="newresid" style="width: 96px;" >
 								<option value="">--Resource--</option>
-								<!--  {foreach item=resource from=$tabresdata}
-										<option value='{$resource.ID}'>{$resource.ResourceInitial}</option>
-										{/foreach}	-->
+								{if $smarty.request.department neq ''}
+								{section name=C loop=$getresdep}
+								<option value="{$getresdep[C].ID}" 
+								{if $smarty.request.newresid  eq $getresdep[C].ID} selected="selected"{/if}>
+								{$getresdep[C].ResourceInitial}</option>
+								{/section}	
+								{/if}
+								{section name=R loop=$getresdept}
+								<option value="{$getresdept[R].ID}">
+								{$getresdept[R].ResourceInitial}
+								</option>
+								{/section}	
 								</select>   
 	           				</td>
                				
-							<td style="text-align:left; display:none;border-bottom:none;" id="sendmail" name="sendmail">
+							<td {if $smarty.request.newresid eq ''} style="text-align:left; display:none;border-bottom:none;" {else} style="display:block;border-bottom:none;" {/if} id="sendmail" name="sendmail">
 								<a  class="button" id="top"  href="javascript:void(0);" onclick="goExport();"><img src="img/mail_send.png" align="middle" height="30" width="30">Send mail</a>
 							</td>
 							
@@ -362,8 +373,8 @@ function check_all()
 								<a class="button" id="top" href="javascript:void(0);" onclick="tool(this);return ExcellentExport.excel(this,'exporttable'); "><img src="img/CSV.png" align="middle" height="30" width="30">Export to CSV</a></div>
 							</td>
 	        		 	</tr>
-	         			<tr style="border-bottom:none;">
-							<td colspan="10"> 		
+	         			<tr >
+							<td colspan="11"> 		
 	 							<input type=submit name="submit1" value="Submit"> 
 							</td>
 						</tr>
