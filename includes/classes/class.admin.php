@@ -21,11 +21,11 @@ class Admin extends MysqlFns
 		$newdesignation= $_REQUEST['admin_des'];
 		$newemail=$_REQUEST['em_txt'];
 		$newAd_pass = $_POST['admin_password'];
-		$select="select * from admin where Username = '".$newAd_name."'";
+		$select="select * from admin where Username = '".$newAd_name."' or Email = '".$newemail."'";
 		$count=$this->ExecuteQuery($select,'norows');// If the Resource initial is not in the table
 			if($count == 0)//the count will be 0 so insert query will happen --- otherwise dont insert ---
 			{
-				$ad_insrt = "INSERT INTO admin(Name, Username,Designation,Email,Password)values('".trim($newAd_first)."','".trim(addslashes($newAd_name))."','".$newdesignation."','".$newAd_pass."','".$newemail."')";
+				$ad_insrt = "INSERT INTO admin(Name, Username,Designation,Password,Email)values('".trim($newAd_first)."','".trim(addslashes($newAd_name))."','".$newdesignation."','".$newAd_pass."','".$newemail."')";
 				$inst_var = $this->ExecuteQuery($ad_insrt,'insert');
 				$objSmarty->assign("SuccessMessage", "Admin details added successfully");
 			}else{

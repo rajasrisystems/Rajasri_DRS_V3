@@ -1,9 +1,8 @@
 <?php
 class Code extends MysqlFns
 {
-
 	function Code()
-		{
+	{
 		global $config;
         	$this->MysqlFns();
 		$this->Offset			= 0;
@@ -12,7 +11,7 @@ class Code extends MysqlFns
 		$this->Keyword			= '';
 		$this->Operator			= '';
 		$this->PerPage			= '';
-		}	
+	}	
 	function insertcode()
 	{
 		global $objSmarty;
@@ -24,10 +23,10 @@ class Code extends MysqlFns
 		$count=$row['Code'];
 		$a = "INSERT INTO code(Code,
 					 Description,
-					  Points,
-					  codetype) 
-				         VALUES 
-				      	 ('".++$count."','".$_REQUEST['code']."','".$_REQUEST['points']."','".$_REQUEST['codeshow']."')"; 
+					 Points,
+					 codetype) 
+				     VALUES 
+				     ('".++$count."','".$_REQUEST['code']."','+".$_REQUEST['points']."','".$_REQUEST['codeshow']."')"; 
 		$this->ExecuteQuery($a, "insert");
 		header("location:code.php?successmsg=1");// redirecting
 		}
@@ -37,12 +36,13 @@ class Code extends MysqlFns
 		$ExeSel= mysql_query($selcode);
 		$row = mysql_fetch_array($ExeSel);
 		$count=$row['Code'];
+		$codepoints = $_REQUEST['points'];
 		$a = "INSERT INTO code(Code,
 					 Description,
 					  Points,
 					  codetype) 
 				         VALUES 
-				      	 ('".++$count."','".$_REQUEST['code']."','".$_REQUEST['points']."','".$_REQUEST['codeshow']."')"; 
+				      	 ('".++$count."','".$_REQUEST['code']."','-".$codepoints."','".$_REQUEST['codeshow']."')"; 
 		$this->ExecuteQuery($a, "insert");
 		header("location:code.php?successmsg=1");// redirecting
 		}
@@ -50,6 +50,42 @@ class Code extends MysqlFns
 	function Updatecode($id)
 	{
 		global $objSmarty,$config;
+		echo $selcodes="select * from code where ID= '".$id."'";
+		$executequery = mysql_query($selcodes); 
+		$row = mysql_fetch_array($executequery);
+		if($_REQUEST['codeshow']== $row['codetype'])
+		{
+		if($_REQUEST['codeshow']=='1')
+		{
+		$selcode="select * from code where Code like 'G%' order by ID desc limit 1";
+		$ExeSel= mysql_query($selcode);
+		$row = mysql_fetch_array($ExeSel);
+		$count=$row['Code'];
+		$tempvar = " UPDATE code SET Code ='".$count."', 
+					 Description = '".addslashes($_REQUEST['code'])."' ,
+					 Points = '+".addslashes($_REQUEST['points'])."',
+					 codetype ='".$_REQUEST['codeshow']."'
+					 WHERE ID ='$id'";
+		$this->ExecuteQuery($tempvar, "update");
+		header("location:code.php?successmsg=2");// redirecting
+		}
+		if($_REQUEST['codeshow']=='2')
+		{
+		$selcode="select * from code where Code like 'B%' order by ID desc limit 1";
+		$ExeSel= mysql_query($selcode);
+		$row = mysql_fetch_array($ExeSel);
+		$count=$row['Code'];
+		$tempvar = " UPDATE code SET Code ='".$count."', 
+					 Description = '".$_REQUEST['code']."' ,
+					 Points = '-".$_REQUEST['points']."',
+					 codetype ='".$_REQUEST['codeshow']."'
+					 WHERE ID ='$id'";
+		$this->ExecuteQuery($tempvar, "update");
+		header("location:code.php?successmsg=2");// redirecting
+		}
+		}
+		else 
+		{
 		if($_REQUEST['codeshow']=='1')
 		{
 		$selcode="select * from code where Code like 'G%' order by ID desc limit 1";
@@ -57,8 +93,8 @@ class Code extends MysqlFns
 		$row = mysql_fetch_array($ExeSel);
 		$count=$row['Code'];
 		$tempvar = " UPDATE code SET Code ='".++$count."', 
-					 Description = '".$_REQUEST['code']."' ,
-					 Points = '".$_REQUEST['points']."',
+					 Description = '".addslashes($_REQUEST['code'])."' ,
+					 Points = '+".addslashes($_REQUEST['points'])."',
 					 codetype ='".$_REQUEST['codeshow']."'
 					 WHERE ID ='$id'";
 		$this->ExecuteQuery($tempvar, "update");
@@ -72,11 +108,12 @@ class Code extends MysqlFns
 		$count=$row['Code'];
 		$tempvar = " UPDATE code SET Code ='".++$count."', 
 					 Description = '".$_REQUEST['code']."' ,
-					 Points = '".$_REQUEST['points']."',
+					 Points = '-".$_REQUEST['points']."',
 					 codetype ='".$_REQUEST['codeshow']."'
 					 WHERE ID ='$id'";
 		$this->ExecuteQuery($tempvar, "update");
 		header("location:code.php?successmsg=2");// redirecting
+		}	
 		}
 		/* echo $selcode="select Code from code where ID= '".$id."' ";
 		$ExeSel= mysql_query($selcode);

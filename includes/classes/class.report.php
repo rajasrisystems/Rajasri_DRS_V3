@@ -20,20 +20,24 @@ class Report extends MysqlFns
 		$monthName = date("F", mktime(0, 0, 0, $getmon, 10));
 		$getyr  = date(Y);
 		$date=$getmon.'/'.$getyr;
-		$select="select * from rating r,resource re where date_format(r.RatingDate, '%m/%Y')='".$date."' and re.ID=r.ResourceID group by r.ResourceID";
-		$result=mysql_query($select);
-		$num=mysql_num_rows($result);
+	
+		//$select="select * from rating r,resource re where date_format(r.RatingDate, '%m/%Y')='".$date."' and re.ID=r.ResourceID group by r.ResourceID";
+		//$result=mysql_query($select);
+		//$num=mysql_num_rows($result);
+		$newselect = "select * from resource";
+		$resultnew=mysql_query($newselect);
 		$c=1;
 		$associativeArray = array();
-		if($num!=''){
-			$table[]='<tr >
+		
+		$table[]='<tr >
 				<tr style="display:none;"><td>Period</td><td>'.$monthName.'-'.$getyr.'</td></tr>
 				<th>Resource</th>
 				<th>Beginning Rate</th>
 				<th>End Rate</th>
 			</tr>';
-			while($rows=mysql_fetch_array($result)){
-				$ResourceID	=$rows['ResourceID'];
+			while($rows=mysql_fetch_array($resultnew))
+			{
+				$ResourceID	=$rows['ID'];
 				$CodeID 	=$rows['CodeID'];
 				$firstDate=$getyr.'-'.$getmon.'-01';
 				$previousmonth=date('m/Y', strtotime($firstDate . ' -1 month'));
@@ -48,12 +52,17 @@ class Report extends MysqlFns
 				$points=0;
 				if($num_rows>0)
 				{
-					while($row2=mysql_fetch_array($exequery)){
+					while($row2=mysql_fetch_array($exequery))
+					{
 							
 						$sql = "SELECT * FROM code where ID='".$row2['CodeID']."'";
 						$getexe = $this->ExecuteQuery($sql, "select");
 						$points+= $getexe[0]['Points'];
 					}
+				}
+				else 
+				{
+					$begin_points=50;
 				}
 				if($points != '')
 				{
@@ -87,6 +96,10 @@ class Report extends MysqlFns
 						$ppoints+= $pgetexe[0]['Points'];
 					}
 				}
+				else
+				{
+					$end_points=50;
+				}
 				if($ppoints != '')
 				{
 					if($getmon == $montht)
@@ -119,15 +132,7 @@ class Report extends MysqlFns
 				 </tr>';
 			}
 				$objSmarty->assign('table',$table);
-		}
-		else
-		{
-			$table[]='<tr>
-						<td colspan="3"> No records found</td>
-						
-				 </tr>';
-			$objSmarty->assign('table',$table);
-		}
+		
 	}
 	//all resource report
 	
@@ -137,29 +142,34 @@ class Report extends MysqlFns
 	$getmon = $_REQUEST['month'];
 	$monthName = date("F", mktime(0, 0, 0, $getmon, 10));
 	$getyr  = $_REQUEST['year'];
-	$getdepart = $_REQUEST['department'];	
+	$getdepart = $_REQUEST['department'];
+	//$currentmon = date(m);	
+	//$currentyear = date(m);	
+	$testdate = "06/2016";	
 	$date=$getmon.'/'.$getyr;
 	if($getdepart == 0)
 	{
-		$select="select * from rating r,resource re where date_format(r.RatingDate, '%m/%Y')='".$date."' and re.ID=r.ResourceID group by r.ResourceID";
+		$select="select * from resource";
 	}
 	else 
 	{
-		$select="select * from rating r,resource re where date_format(r.RatingDate, '%m/%Y')='".$date."' and re.ID=r.ResourceID and r.DepartmentID ='".$getdepart."' group by r.ResourceID";
+		$select="select * from resource where DepartmentId ='".$getdepart."'";
 	}
 	$result=mysql_query($select);
 	$num=mysql_num_rows($result);
 	$c=1;
 	$associativeArray = array();
-	if($num!=''){
+	if($num!='' && $date >= $testdate){
 		$table[]='<tr >
 				<tr style="display:none;"><td>Period</td><td>'.$monthName.'-'.$getyr.'</td></tr>
+				<tr style="display:none;"><td>Department</td><td>'.$this->getdepartnamebyId($getdepart).'</td></tr>
+				<tr style="display:none;"></tr>
 				<th>Resource</th>
 				<th>Beginning Rate</th>
 				<th>End Rate</th>
 			</tr>';
 		while($rows=mysql_fetch_array($result)){
-			$ResourceID	=$rows['ResourceID'];
+			$ResourceID	=$rows['ID'];
 			$CodeID 	=$rows['CodeID'];
 			$firstDate=$getyr.'-'.$getmon.'-01';
 			$previousmonth=date('m/Y', strtotime($firstDate . ' -1 month'));
@@ -245,21 +255,21 @@ class Report extends MysqlFns
 			 </tr>';
 		}
 			$objSmarty->assign('table',$table);
-	}
-	else
-	{
-		$table[]='<tr id="alltd">
+		}
+		else
+		{
+			$table[]='<tr >
+				<tr style="display:none;"><td>Period</td><td>'.$monthName.'-'.$getyr.'</td></tr>
 				<th>Resource</th>
 				<th>Beginning Rate</th>
 				<th>End Rate</th>
-			</tr>
-		<tr>
-					<td colspan="3"> No records found</td>
-					
-			 </tr>';
-		$objSmarty->assign('table',$table);
-	}
-
+			</tr>';
+			$table[]='<tr>
+						<td colspan="3"> No records found</td>
+						
+				 </tr>';
+			$objSmarty->assign('table',$table);
+		}
 	}
 		
 	// Individual data
@@ -267,6 +277,7 @@ class Report extends MysqlFns
 	function getindres()
 	{
 		global $objSmarty,$config;
+		$getdepart = $_REQUEST['department'];	
 		$getmon = $_REQUEST['month'];
 		$monthName = date("F", mktime(0, 0, 0, $getmon, 10));
 		$getyr  = $_REQUEST['year'];
@@ -290,8 +301,10 @@ class Report extends MysqlFns
 		$noofdays = 0;
 		$table[]='<tr >
 		<tr style="display:none;"><td>Period</td><td>'.$monthName.'-'.$getyr.'</td></tr>
+		<tr style="display:none;"><td>Department</td><td>'.$this->getdepartnamebyId($getdepart).'</td></tr>
 		<tr style="display:none;"><td> Resource:</td><td>'.$iniquery.'</td></tr>
 		<tr style="display:none;"><td> Beginning Rate</td><td>'.$this->getb($getmon,$getini,$getyr).'</td><td> End Rate</td><td>'.$this->gete($getmon,$getini,$getyr).'</td>
+		<tr style="display:none;"></tr>
 		<tr style="display:none;"></tr>	
 				<th>Date</th>
 				<th>Change</th>
@@ -634,6 +647,12 @@ class Report extends MysqlFns
 				}
 		        $mail->ClearAddresses();
 		    }
+	}
+	function getdepartnamebyId($id)
+	{
+		$department = "SELECT * FROM department where ID='".$id."'";
+		$getexe = $this->ExecuteQuery($department, "select");
+		return $getexe[0]['DepartmentName'];
 	}
 }
 ?>
