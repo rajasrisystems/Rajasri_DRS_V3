@@ -39,7 +39,7 @@ function loginSubmit()
 </script>
 {/literal}
 <div id="main">
-<div class="logo"><a href="http://www.rajasri.net/"><img src="img/rajasri.jpeg" alt="" style="width:50px; height:50px;"/></a></div>
+<div class="logo"><a href="http://www.rajasri.com/" target="_blank"><img src="img/rajasri.jpeg" alt="" style="width:50px; height:50px;"/></a></div>
 <div style="clear:both;"></div>
 <div id="login-panel">
 		<div id="center-column"> 

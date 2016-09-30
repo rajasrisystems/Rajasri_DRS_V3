@@ -12,7 +12,7 @@
 <body>
 <div id="wrapper">
 	<div id="header">
-		<a href="http://www.rajasri.net/" class="inner-logo"><img src="img/rajasri.jpeg" alt=""/></a>
+		<a href="http://www.rajasri.com/" target="_blank" class="inner-logo"><img class=" " src="img/rajasri.jpeg" alt=""/></a>
 	<ul id="top-navigation">
 			<li {if $activePage eq '1'}class="active"{/if}><a href="controlpanel.php" class="navigation_link">Home</a></li>
 			<li {if $activePage eq '5'}class="active"{/if}><a href="admin.php" class="navigation_link">Admin</a></li>

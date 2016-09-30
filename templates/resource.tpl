@@ -143,7 +143,7 @@ function ressortsub3()
 				</tr>
 			<tr style="border-bottom:none;">
 				<!---- Resource Name Text Box ---->
-				<td width="10%" nowrap="nowrap" style="text-align:left; border-bottom:none;" >Resource: <span style="color:red">*</span></td>
+				<td width="10%" nowrap="nowrap" style="text-align:center; border-bottom:none;" >Resource: <span style="color:red">*</span></td>
 				<td width="5%" style="border-bottom:none;"><input type ="text" id="rs_txt" name = "resource_text" style="width: 200px;" value="{$resourceDetails.0.ResourceName}"></td>
 				
 				<!---- Resource Initial Text ---->

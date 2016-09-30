@@ -10,25 +10,33 @@
 	function validfield()
 	{
 		document.getElementById('test').innerHTML ="";
+		document.getElementById('test2').innerHTML ="";
+		document.getElementById('test3').innerHTML ="";
 		document.getElementById('errmsg').innerHTML="";
-			
+		var regexp = /^\S/;
+		var codevalidation = /^[ 0-9]+/;	
 		if(document.getElementById('codeshow').value=='')
 		{
-		document.getElementById('errmsg').innerHTML='Please select CodeId';
+		document.getElementById('errmsg').innerHTML='Please select code category';
 		document.getElementById('codeshow').focus();
 		return false;
 		}
-		
-		if(document.getElementById('code').value=='')
+		if(!document.getElementById('code').value.trim())
 		{
-		document.getElementById('errmsg').innerHTML='Please enter Description';
+		document.getElementById('errmsg').innerHTML='Please enter description';
 		document.getElementById('code').focus();
 		return false;
 		}
-		if(document.getElementById('code').value=='')
+		if(document.getElementById('points').value=='')
 		{
-		document.getElementById('errmsg').innerHTML='Please enter Description';
-		document.getElementById('code').focus();
+		document.getElementById('errmsg').innerHTML='Please enter points';
+		document.getElementById('points').focus();
+		return false;
+		}
+		if(!document.getElementById('points').value.match(codevalidation))
+		{
+		document.getElementById('errmsg').innerHTML='Please enter valid points';
+		document.getElementById('points').focus();
 		return false;
 		}
 		if(document.getElementById('Id').value=='')
@@ -115,30 +123,30 @@
 				<td style="border-bottom:none;" colspan="10">
 				<div class="Error" align="center" id="errmsg"></div>
 				<div class="success" id="test">{if $smarty.request.successmsg eq 1} Code has been added successfully {/if}
-					</div>
-					<div class="success" id="test">{if $smarty.request.successmsg eq 2} Code has been updated successfully {/if}
-					</div>
-					<div class="success" id="test">{if $smarty.request.successmsg eq 3}Code has been deleted successfully {/if}
-					</div>
+				</div>
+				<div class="success" id="test2">{if $smarty.request.successmsg eq 2} Code has been updated successfully {/if}
+				</div>
+				<div class="success" id="test3">{if $smarty.request.successmsg eq 3}Code has been deleted successfully {/if}
+				</div>
 				</td>
 				</tr>
 				<tr style="border-bottom:none;">
-				<td style="text-align:right;border-bottom:none;">Code ID: <span style="color:red">*</span></td>
-					<td id="" style="text-align:center;border-bottom:none;" width="5%"> 
+				<td style="text-align:right;border-bottom:none;" valign="top">Code Category: <span style="color:red">*</span></td>
+					<td id="" style="text-align:center;border-bottom:none;" width="5%" valign="top"> 
 					<select id="codeshow" name="codeshow" style="width: 95px;" >
 						<option value="">---Code---</option>
 						<option {if $indcode.0.codetype eq 1} selected="selected" {/if} value="1">Good</option>
 						<option {if $indcode.0.codetype eq 2} selected="selected" {/if} value="2">Bad</option>
 					</select>
 					</td>
-				<td style="text-align:right;border-bottom:none;"> Description: <span style="color:red">*</span></td>
-					<td style="text-align:center;border-bottom:none;width:100px;">
-						<input type="text" id="code" style=" width:400px;" name="code" value="{$indcode.0.Description}">
+				<td style="text-align:right;border-bottom:none;" valign="top"> Description: <span style="color:red">*</span></td>
+					<td style="text-align:center;border-bottom:none;width:100px;" >
+						<textarea id="code" style=" width:400px;" name="code" >{$indcode.0.Description}</textarea>
 	                </td>
 	           
-	            <td style="text-align:right;border-bottom:none;"> Points: <span style="color:red">*</span></td>
-					<td style="text-align:left;border-bottom:none;">
-						<input type="text" id="points"  name="points" value="{$indcode.0.Points}">
+	            <td style="text-align:right;border-bottom:none;" valign="top"> Points: <span style="color:red">*</span></td>
+					<td style="text-align:left;border-bottom:none;" valign="top">
+						<input type="text" id="points"  valign="top" name="points" value="{$indcode.0.Points|substr:1}">
 	                </td>
 	            </tr>
 				<tr style="border-bottom:none;">

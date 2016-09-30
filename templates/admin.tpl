@@ -60,6 +60,8 @@ function validate_ad()
 }
 function myFunction() 
 	{
+	document.getElementById('errmsg1').innerHTML='';
+	document.getElementById('errmsg').innerHTML='';
 		var x;
 		if (confirm("Are you sure! you want to delete this record?")) 
 		{

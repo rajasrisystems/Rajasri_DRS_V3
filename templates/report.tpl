@@ -29,14 +29,19 @@ function getreport()
 	var year=document.getElementById('year').value; 	
 	var department=document.getElementById('department').value; 
 	var newresid=document.getElementById('newresid').value; 
-
-	if(month != '0' && year != '0' && department !='' && newresid !='' )
+	var radiocheck = document.getElementById("radio2").checked;
+	var individualradio = document.getElementById("radio1").checked;
+	if(month != '0' && year != '0' && department !='' && newresid !='' && individualradio == true )
 	{
 		//document.getElementById("sendmail").style.display = "block";
+		var newname = document.getElementById('newresid').options[document.getElementById('newresid').selectedIndex].text;
+		document.getElementById('optionname').value = newname;
 		document.getElementById('getreshid').value ='2';
 	}
 	else
 	{
+		document.getElementById("radio1").checked==false;
+		document.getElementById('newresid').value= "";
 		document.getElementById('getreshid').value ='1';
 	}
 }
@@ -49,10 +54,10 @@ function tbl_view()
 		}
 		else
 		{
-			month=document.getElementById('month').value;
+			month = document.getElementById('month').value;
 			year=document.getElementById('year').value;
 			newresid=document.getElementById('newresid').value;
-			optionname= document.getElementById('newresid').options[document.getElementById('newresid').selectedIndex].text;
+			optionname = document.getElementById('newresid').options[document.getElementById('newresid').selectedIndex].text;
 			dataction=document.getElementById('dataction').value;
 			resource=2;
 			$.ajax({
@@ -274,8 +279,16 @@ function check_all()
 		check_all();	
 	}	 
  }
-
-
+/*********** Sorting Month name with its option value***********/
+ /*
+ $(document).ready(function() {
+        $("#month").html($('#month option').sort(function(x, y) {
+            return $(x).val() < $(y).val() ? -1 : 1;
+        }))
+        e.preventDefault();
+});
+ */
+ /************************/
 </script>
 {/literal}
 <!--Design Prepared by Rajasri Systems-->   
@@ -312,7 +325,7 @@ function check_all()
 				 			<td width="7%" style="text-align:left;border-bottom:none;">
 								<select id="month" name="month" onchange="tap(this); return chkResource();">
 								{foreach key=k item=v from=$months}	
-								<option value='{$k}' {if $k eq $currentMonth}selected{/if} >{$v} </option>
+								<option value='{$v|date_format:"%m"}' {if $v|date_format:"%m" eq $currentMonth}selected="selected"{/if} >{$v} </option>
  								{/foreach}
 								</select>
 							</td>
@@ -367,9 +380,9 @@ function check_all()
 							</td>
 							
 							<td style="text-align:right;border-bottom:none;">
-								<div style="display:block;" id="export">
-								<a class="button" id="top" href="javascript:void(0);" onclick="tool(this);"><img src="img/CSV.png" align="middle" height="30" width="30">Export to CSV</a></div>
-								<div style="display:none;" id="exportnew">
+								<div style="display:none;" id="export">
+								<a class="button" id="top" href="javascript:void(0);" onclick="tool(this);"><img src="img/CSV.png" align="middle" height="30" width="30">Export to CSV1</a></div>
+								<div style="display:block;" id="exportnew">
 								<a class="button" id="top" href="javascript:void(0);" onclick="tool(this);return ExcellentExport.excel(this,'exporttable'); "><img src="img/CSV.png" align="middle" height="30" width="30">Export to CSV</a></div>
 							</td>
 	        		 	</tr>
