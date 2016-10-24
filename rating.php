@@ -6,7 +6,6 @@
 	$objLogin = new Login();
 	$objLogin->chklogin();
 	$objSmarty->assign('activePage',"2");
-	echo 'hi';
 	if($_REQUEST['Hitaction']=='1')
 	{
 		$objRating->insertdetails();
@@ -31,5 +30,6 @@
 	$objSmarty->assign('current_date', $current_date);	
 	$objSmarty->assign('IncludeTpl',"rating.tpl");
 	$objSmarty->display("pagetemplate.tpl");
+	//Hello Test
 ?>
 
